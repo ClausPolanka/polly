@@ -15,7 +15,7 @@ class Listing
       git_cmd.filename = filename
       git_cmd.show.split("\n")
     else
-      "From file: " + File.read("code/code.rb").split("\n")
+      File.read("code/code.rb").split("\n")
     end
   end
 end
