@@ -2,10 +2,10 @@ require_relative 'GitCmd'
 require_relative 'Listing'
 
 listing = Listing.new(
-  filename: "code.rb",
-  line_numbers: "#0, 2-3, #0, 1",
+  filename: "Hello.java",
+  left_just: true,
   repository: "code/.git",
-  tag: "test_version",
+  tag: "test_version_java",
   git_cmd: GitCmd.new)
 
 puts listing.lines
