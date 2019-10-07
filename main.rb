@@ -1,11 +1,14 @@
 require_relative 'GitCmd'
 require_relative 'Listing'
+require_relative 'GitTagSource'
 
 listing = Listing.new(
-  filename: "Hello.java",
-  left_just: true,
-  repository: "code/.git",
-  tag: "test_version_java",
-  git_cmd: GitCmd.new)
+  source: GitTagSource.new(
+    filename: "code.rb",
+    repository: "code/.git",
+    tag: "test_version_java",
+    git_cmd: GitCmd.new),
+  line_numbers: "#0, 2-3, #0, 1",
+  left_just: true)
 
 puts listing.lines

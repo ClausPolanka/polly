@@ -1,21 +1,14 @@
 class Listing
-  attr_reader :filename, :line_numbers, :left_just, :repository, :tag, :git_cmd
+  attr_reader :source, :line_numbers, :left_just
 
-  def initialize(filename:, line_numbers: nil, left_just: false, repository: nil, tag: nil, git_cmd: nil)
-    @filename = filename
+  def initialize(source:, line_numbers: nil, left_just: false)
+    @source = source
     @line_numbers = line_numbers
     @left_just = left_just
-    @repository = repository
-    @tag = tag
-    @git_cmd = git_cmd
   end
 
   def lines
-    all_lines = if git_cmd
-      git_lines
-    else
-      file_lines
-    end
+    all_lines = source.lines
 
     subset = if line_numbers
       lines_to_print(all_lines)
@@ -27,17 +20,6 @@ class Listing
       return justify(subset)
     end
     subset
-  end
-
-  def git_lines
-    git_cmd.repository = repository
-    git_cmd.tagname = tag
-    git_cmd.filename = filename
-    git_cmd.show.split("\n")
-  end
-
-  def file_lines
-    File.read("code/code.rb").split("\n")
   end
 
   # "1, #4, 3-4, #6, 15, 37-50"
