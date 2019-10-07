@@ -30,7 +30,7 @@ class Listing
   end
 
   def file_lines
-    "From file: " + File.read("code/code.rb").split("\n")
+    File.read("code/code.rb").split("\n")
   end
 
   # "1, 3-4, 15, 37-50"
