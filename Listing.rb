@@ -1,40 +1,22 @@
-class Listing
-  attr_reader :source, :line_numbers, :left_just
+require_relative "Subset"
 
-  def initialize(source:, line_numbers: nil, left_just: false)
+class Listing
+
+  attr_reader :source, :subsetter, :left_just
+
+  def initialize(source:, subsetter:,left_just: false)
     @source = source
-    @line_numbers = line_numbers
+    @subsetter = subsetter
     @left_just = left_just
   end
 
   def lines
-    all_lines = source.lines
-
-    subset = if line_numbers
-      lines_to_print(all_lines)
-    else
-      all_lines
-    end
+    subset = subsetter.lines(source.lines)
 
     if left_just
       return justify(subset)
     end
     subset
-  end
-
-  # "1, #4, 3-4, #6, 15, 37-50"
-  def lines_to_print(all_lines)
-    specs = line_numbers.gsub(/[‘|’]/, "").gsub(/ /, '').split(",")
-    specs.collect { |spec|
-      if spec.include?('#')
-        num_spaces = spec.delete('#').to_i
-        (" " * num_spaces) + "# ..."
-      else
-        edges = spec.split('-').collect(&:to_i)
-        individiual_numbers = (edges.min.to_i..edges.max.to_i).to_a
-        individiual_numbers.collect { |i| all_lines[i - 1] }.compact
-      end
-    }.flatten.compact
   end
 
   def justify(lines)
