@@ -1,12 +1,11 @@
 require_relative 'GitCmd'
 require_relative 'Listing'
-require_relative 'GitTagSource'
+require_relative 'Source'
 require_relative 'Subset'
-require_relative 'FileSource'
 require_relative 'Justification'
 
 listing = Listing.new(
-  source: GitTagSource.new(
+  source: Source::GitTagSource.new(
     filename: "Hello.java",
     repository: "code/.git",
     tag: "test_version_java_with_correct_identation",
@@ -19,9 +18,8 @@ puts listing.lines
 puts "========================================================="
 puts "========================================================="
 
-
 listing = Listing.new(
-  source: FileSource.new,
+  source: Source::FileSource.new,
   subsetter: Subset::LineNumber.new(line_numbers: "#0, 2-3, #0, 1"),
   justifier: Justification::None.new)
 
